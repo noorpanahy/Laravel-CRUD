@@ -20,3 +20,7 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/create-post', [PostController::class, 'createPost']);
+
+Route::get('/edit-post/{post}', [PostController::class, 'editController']);
+Route::put('/edit-post/{post}', [PostController::class, 'updatedData']);
+Route::delete('/delete-post/{post}', [PostController::class, 'deletePost']);
