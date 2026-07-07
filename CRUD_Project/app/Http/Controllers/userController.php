@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Auth;
 class userController extends Controller
 {
 
+    public function login(Request $request)
+    {
+        $userInput = $request->validate([
+            'loginname' => ['required'],
+            'loginpassword' => ['required']
+        ]);
+
+        if (Auth::attempt([
+            'name' => $userInput['loginname'],
+            'password' => $userInput['loginpassword']
+        ])) {
+            $request->session()->regenerate();
+        };
+
+        return redirect('/');
+    }
+
     public function logout()
     {
         Auth::logout();

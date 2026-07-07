@@ -15,6 +15,17 @@
     <button>Logout</button>
 </form>
 
+    <div style="border: 3px solid black; margin:5x;padding:5px">
+        <h2>Create Post</h2>
+        <form action="/create-post" method="POST">
+            @csrf
+            <input name="title" placeholder="Title Name" type="text">
+            <textarea name="body" placeholder="Body OF Post"></textarea>
+            <button type="submit">Save Post</button>
+        </form>
+
+    </div>
+
     @else
     <div style="border: 3px solid black; margin:5px; padding:5px ">
         <h2>Register</h2>
@@ -32,8 +43,8 @@
         <h2>Register</h2>
         <form action="/login" method="POST">
             @csrf
-            <input placeholder="name" name="username" type="text">
-            <input type="password" placeholder="password" name="userpassword">
+            <input placeholder="name" name="loginname" type="text">
+            <input type="password" placeholder="password" name="loginpassword">
             <button>Login</button>
         </form>
         <br>
