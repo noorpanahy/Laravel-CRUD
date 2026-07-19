@@ -13,11 +13,16 @@ class PostController extends Controller
         $incomingField = $request->validate([
             'title' => ['required', 'min:3', 'max:255'],
             'body'  => ['required', 'min:5', 'max:10000'],
+            'image' => ['nullable', 'image', 'max:2048'], // 2MB limit, must be an actual image
         ]);
 
         $incomingField['title'] = strip_tags($incomingField['title']);
         $incomingField['body'] = strip_tags($incomingField['body']);
         $incomingField['user_id'] = Auth::id();
+
+        if ($request->hasFile('image')) {
+            $incomingField['image'] = $request->file('image')->store('post-images', 'public');
+        }
 
         Post::create($incomingField);
 
@@ -27,7 +32,7 @@ class PostController extends Controller
     public function editController(Post $post)
     {
         if (Auth::user()->id !== $post['user_id']) {
-            return Redirect('/');
+            return redirect('/');
         }
 
         return view('edit-post', ['post' => $post]);
@@ -36,7 +41,7 @@ class PostController extends Controller
     public function updatedData(Post $post, Request $request)
     {
         if (Auth::user()->id !== $post['user_id']) {
-            return Redirect('/');
+            return redirect('/');
         }
 
         $incomingField = $request->validate([
@@ -56,6 +61,6 @@ class PostController extends Controller
         if (Auth::user()->id === $post['user_id']) {
             $post->delete();
         }
-        return Redirect('/');
+        return redirect('/');
     }
 }
